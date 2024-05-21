@@ -1,0 +1,84 @@
+﻿@model IEnumerable<PracticalTask.Models.ViewModels.MeetingMinutesMasterVm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CorporateCustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndividualCustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingPlace)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttendsFormClientSide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttendsFormHostSide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingAgenda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingDiscussion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeetingDecision)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CorporateCustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IndividualCustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingPlace)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttendsFormClientSide)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttendsFormHostSide)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingAgenda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingDiscussion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingDecision)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

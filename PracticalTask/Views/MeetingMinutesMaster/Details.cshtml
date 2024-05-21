@@ -1,0 +1,82 @@
+﻿@model PracticalTask.Models.ViewModels.MeetingMinutesMasterVm
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="container mt-5">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Meeting Date:</dt>
+                <dd class="col-sm-8">@Model.MeetingDate</dd>
+
+                <dt class="col-sm-4">Individual Customer:</dt>
+                <dd class="col-sm-8">@Model.IndividualCustomerName</dd>
+
+                <dt class="col-sm-4">Corporate Customer:</dt>
+                <dd class="col-sm-8">@Model.CorporateCustomerName</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MeetingDate)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MeetingDate)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MeetingPlace)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MeetingPlace)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.AttendsFormClientSide)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.AttendsFormClientSide)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.AttendsFormHostSide)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.AttendsFormHostSide)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MeetingAgenda)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MeetingAgenda)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MeetingDiscussion)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MeetingDiscussion)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.MeetingDecision)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MeetingDecision)</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <h4>Meeting Minutes Details:</h4>
+                <div class="col-sm-12">
+                    @if (Model.Products != null && Model.Products.Any())
+                    {
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.Products)
+                                {
+                                    <tr>
+                                        <td>@detail.ProductName</td>
+                                        <td>@detail.Quantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No meeting minutes details available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

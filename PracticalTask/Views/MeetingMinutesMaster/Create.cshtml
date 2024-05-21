@@ -1,0 +1,370 @@
+﻿@model PracticalTask.Models.ViewModels.MeetingMinutesMasterVm
+@using PracticalTask.Collections;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-5">
+    <div class="card rounded-0">
+        <div class="d-flex justify-content-between border-bottom p-1 bg-light px-4">
+            <h6>Meeting Minutes</h6>
+            <span>
+                <i class="bi bi-pencil-square"></i>
+            </span>
+        </div>
+        <div class="card-body p-3">
+            <form id="meetingMinutesDetailsCreateForm" role="form" asp-action="Create" asp-controller="MeetingMinutesMaster" method="post" enctype="multipart/form-data">
+                <div class="row g-4">
+                    <div class="col-lg-12 col-md-6 mb-1">
+                        @foreach (CustomerType type in Enum.GetValues(typeof(CustomerType)))
+                        {
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="customerType" id="@($"inlineRadio{type}")"
+                                       value="@type" @(type == CustomerType.Corporate ? "checked" : "")>
+                                <label class="form-check-label" for="@($"inlineRadio{type}")">@type</label>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-1">
+                        <div class="row g-3">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group" id="corporateDropdown">
+                                    <label asp-for="CorporateCustomerId" class="control-label"></label>
+                                    <select asp-for="CorporateCustomerId" class="form-control" asp-items="@(Model.CorporateCustomerDropdown)" required="false">
+                                        <option value="">Select Customer</option>
+                                    </select>
+                                    <span class="text-danger" id="corporateError" style="display: none;">Please select a corporate customer.</span>
+                                </div>
+                                <div class="form-group" id="individualDropdown" style="display: none;">
+                                    <label asp-for="IndividualCustomerId" class="control-label"></label>
+                                    <select asp-for="IndividualCustomerId" class="form-control" asp-items="@(Model.IndividualCustomerDropdown)" required="false">
+                                        <option value="">Select Customer</option>
+                                    </select>
+                                    <span class="text-danger" id="individualError" style="display: none;">Please select an individual customer.</span>
+                                </div>
+                                @*<div class="form-group" id="corporateDropdown">
+                                        <label asp-for="CorporateCustomerId" class="control-label"></label>
+                                        <select asp-for="CorporateCustomerId" class="form-control" asp-items="@(Model.CorporateCustomerDropdown)" required="false">
+                                            <option value="">Select Customer</option>
+                                        </select>
+                                        <span class="text-danger" id="corporateError" style="display: none;">Please select a corporate customer.</span>
+                                    </div>
+                                    <div class="form-group" id="individualDropdown" style="display: none;">
+                                        <label asp-for="IndividualCustomerId" class="control-label"></label>
+                                        <select asp-for="IndividualCustomerId" class="form-control" asp-items="@(Model.IndividualCustomerDropdown)" required="false">
+                                            <option value="">Select Customer</option>
+                                        </select>
+                                        <span class="text-danger" id="individualError" style="display: none;">Please select an individual customer.</span>
+                                    </div>*@
+
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MeetingDate" class="control-label"></label>
+                                    <input asp-for="MeetingDate" class="form-control" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                                    <span asp-validation-for="MeetingDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MeetingPlace" class="control-label"></label>
+                                    <input asp-for="MeetingPlace" class="form-control" />
+                                    <span asp-validation-for="MeetingPlace" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="AttendsFormClientSide" class="control-label"></label>
+                                    <textarea asp-for="AttendsFormClientSide" class="form-control"></textarea>
+                                    <span asp-validation-for="AttendsFormClientSide" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="AttendsFormHostSide" class="control-label"></label>
+                                    <textarea asp-for="AttendsFormHostSide" class="form-control"></textarea>
+                                    <span asp-validation-for="AttendsFormHostSide" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="row g-3">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MeetingAgenda" class="control-label"></label>
+                                    <textarea asp-for="MeetingAgenda" class="form-control"></textarea>
+                                    <span asp-validation-for="MeetingAgenda" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MeetingDiscussion" class="control-label"></label>
+                                    <textarea asp-for="MeetingDiscussion" class="form-control"></textarea>
+                                    <span asp-validation-for="MeetingDiscussion" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <label asp-for="MeetingDecision" class="control-label"></label>
+                                    <textarea asp-for="MeetingDecision" class="form-control"></textarea>
+                                    <span asp-validation-for="MeetingDecision" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="meetingMinutesDetails">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px"></th>
+                                            <th style="width: 450px">
+                                                @Html.DropDownList("ProductId", (IEnumerable<SelectListItem>)ViewBag.ProductDropdown, "Select Item", new { @class = "select2 js-select2 form-control" })
+                                            </th>
+                                            <th style="width: 150px">
+                                                <input class="form-control" id="Quantity" name="Quantity" value="0" type="text" />
+                                            </th>
+                                            <th style="width: 50px">
+                                                <input type="button" name="add" value="Add" class="btn btn-sm btn-success" id="createMeetingMinutesDetails" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product/Service</th>
+                                            <th>Quantity</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pull-right">
+                        <input type="submit" class="btn btn-success" value="Save" />
+                        <input type="reset" class="btn" value="Clear" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    @*<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const corporateRadio = document.getElementById('inlineRadioCorporate');
+                const individualRadio = document.getElementById('inlineRadioIndividual');
+                const corporateDropdown = document.getElementById('corporateDropdown');
+                const individualDropdown = document.getElementById('individualDropdown');
+
+                function updateDropdownVisibility() {
+                    if (corporateRadio.checked) {
+                        corporateDropdown.style.display = 'block';
+                        individualDropdown.style.display = 'none';
+                    } else if (individualRadio.checked) {
+                        corporateDropdown.style.display = 'none';
+                        individualDropdown.style.display = 'block';
+
+                    }
+                }
+
+                corporateRadio.addEventListener('change', updateDropdownVisibility);
+                individualRadio.addEventListener('change', updateDropdownVisibility);
+
+                updateDropdownVisibility();
+            });
+
+        </script>*@
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const corporateRadio = document.getElementById('inlineRadioCorporate');
+            const individualRadio = document.getElementById('inlineRadioIndividual');
+            const corporateDropdown = document.getElementById('corporateDropdown');
+            const individualDropdown = document.getElementById('individualDropdown');
+            const corporateSelect = corporateDropdown.querySelector('select');
+            const individualSelect = individualDropdown.querySelector('select');
+            const corporateError = document.getElementById('corporateError');
+            const individualError = document.getElementById('individualError');
+
+            function updateDropdownVisibility() {
+                if (corporateRadio.checked) {
+                    corporateDropdown.style.display = 'block';
+                    individualDropdown.style.display = 'none';
+                    corporateSelect.required = true;
+                    individualSelect.required = false;
+                    individualSelect.value = '';
+                    individualError.style.display = 'none';
+                } else if (individualRadio.checked) {
+                    corporateDropdown.style.display = 'none';
+                    individualDropdown.style.display = 'block';
+                    corporateSelect.required = false;
+                    individualSelect.required = true;
+                    corporateSelect.value = '';
+                    corporateError.style.display = 'none';
+                }
+            }
+
+            // Update visibility based on the initial state
+            updateDropdownVisibility();
+
+            // Add event listeners to update visibility on change
+            corporateRadio.addEventListener('change', updateDropdownVisibility);
+            individualRadio.addEventListener('change', updateDropdownVisibility);
+
+            // Add form submission handler to show errors if required fields are not selected
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                if (corporateRadio.checked && !corporateSelect.value) {
+                    event.preventDefault();
+                    corporateError.style.display = 'block';
+                } else {
+                    corporateError.style.display = 'none';
+                }
+
+                if (individualRadio.checked && !individualSelect.value) {
+                    event.preventDefault();
+                    individualError.style.display = 'block';
+                } else {
+                    individualError.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <script>
+        var products = [];
+
+        function generateMeetingMinutesDetailsTable(products) {
+            var productTable = "";
+
+            if (products.length === 0) {
+                productTable = "";
+            } else {
+                $.each(products, function (i, v) {
+                    var removeButton = "<button type='button' class='btn btn-sm btn-danger' onclick='removeMeetingMinutesDetails(" + i + ")'><i class='fa fa-remove'></i> Remove</button>";
+                    productTable += "<tr>" +
+                        "<td>" + (i + 1) + "</td>" +
+                        "<td>" + v.ProductName + "</td>" +
+                        "<td>" + v.Quantity + "</td>" +
+                        "<td>" + removeButton + "</td>" +
+                        "</tr>";
+                });
+            }
+
+            $("#meetingMinutesDetails tbody").html(productTable);
+        }
+
+        function addMeetingMinutesDetailsRow() {
+            var selectedItem = $("#ProductId").select2("data")[0];
+            if (!selectedItem || selectedItem.id === '') {
+                alert("Item not selected");
+                return;
+            }
+
+            var product = {
+                MeetingId: 0,
+                ProductId: selectedItem.id,
+                ProductName: selectedItem.text,
+                Quantity: parseInt($("#Quantity").val())
+            };
+
+            console.log(product)
+
+            if (!MeetingMinutesDetailsValidation(product)) {
+                return;
+            }
+
+            products.push(product);
+            console.log(products)
+            clearMeetingMinutesDetails();
+            generateMeetingMinutesDetailsTable(products);
+        }
+
+        function removeMeetingMinutesDetails(index) {
+            products.splice(index, 1);
+            generateMeetingMinutesDetailsTable(products);
+        }
+
+        function MeetingMinutesDetailsValidation(product) {
+            if (product.Quantity === 0) {
+                alert("Quantity not set");
+                return false;
+            }
+            return true;
+        }
+
+        function clearMeetingMinutesDetails() {
+            $('#ProductId').val(null).trigger('change');
+            $("#Quantity").val(0);
+        }
+
+
+        $(document).ready(function () {
+            $("#ProductId").select2();
+            $("#createMeetingMinutesDetails").click(function () {
+                addMeetingMinutesDetailsRow();
+            });
+
+            submitForm("#meetingMinutesDetailsCreateForm");
+            /*submitForm("#meetingMinutesDetailsEditForm");*/
+
+            function submitForm(selector) {
+                $(selector).submit(function (e) {
+                    e.preventDefault();
+                    if ($(this).valid()) {
+                        var formData = new FormData(this);
+
+                        for (var i = 0; i < products.length; i++) {
+                            formData.append("Products[" + i + "].ProductId", products[i].ProductId);
+                            formData.append("Products[" + i + "].ProductName", products[i].ProductName);
+                            formData.append("Products[" + i + "].Quantity", products[i].Quantity);
+                        }
+
+                        $.ajax({
+                            processData: false,
+                            data: formData,
+                            dataType: 'json',
+                            async: false,
+                            enctype: "multipart/form-data",
+                            contentType: false,
+                            type: $(this).attr('method'),
+                            url: $(this).attr('action'),
+                            success: function (response) {
+                                if (response.success) {
+                                    products = [];
+                                    generateMeetingMinutesDetailsTable(products);
+                                    $(selector).trigger("reset");
+                                    clearMeetingMinutesDetails();
+                                    $("#message").html(response.message);
+                                    // Redirect to the index page
+                                    window.location.href = '/MeetingMinutesMaster/Index';
+                                }
+                            },
+                            error: function (err) {
+                                console.log('error msg', err);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
+    </script>
+
+}
