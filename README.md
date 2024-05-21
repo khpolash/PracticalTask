@@ -25,7 +25,7 @@ Our ASP.NET Core project serves [provide a brief description of the project, its
 
 Before you proceed with the installation, ensure that you have the following software installed on your system:
 
-- [.NET SDK](https://dotnet.microsoft.com/download) (Version 6.0 or later)
+- [.NET SDK](https://dotnet.microsoft.com/download) (Version 8.0 or later)
 - [Visual Studio](https://visualstudio.microsoft.com/downloads/) (2022 or later) with the ASP.NET and web development workload
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (Express edition or later)
 - [Git](https://git-scm.com/downloads)
